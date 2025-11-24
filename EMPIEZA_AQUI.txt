@@ -1,0 +1,49 @@
+═══════════════════════════════════════════════════════════════════════════
+
+                    ¡BIENVENIDO!
+
+═══════════════════════════════════════════════════════════════════════════
+
+SOLO 3 PASOS:
+
+1. Haz doble clic en: EJECUTAR.bat
+
+2. Selecciona: "Ejecutar como administrador"
+
+3. Espera a que aparezca el reporte (2-5 minutos)
+
+
+═══════════════════════════════════════════════════════════════════════════
+
+Eso es TODO. 
+
+El programa:
+  ✓ Verifica 7 áreas de seguridad
+  ✓ Genera un reporte visual en HTML
+  ✓ Lo abre automáticamente en tu navegador
+
+═══════════════════════════════════════════════════════════════════════════
+
+ARCHIVOS DESPUÉS DE EJECUTAR:
+
+  • reporte_seguridad.html ... Reporte colorido (lo importante)
+  • reporte_seguridad.json ... Datos técnicos (si necesitas)
+
+═══════════════════════════════════════════════════════════════════════════
+
+¿PROBLEMAS?
+
+❌ "Python no reconocido"
+   → Descarga Python desde python.org
+   → Marca "Add Python to PATH"
+   → Reinicia tu PC
+
+❌ "Access Denied"  
+   → Haz clic DERECHO en EJECUTAR.bat
+   → "Ejecutar como administrador"
+
+═══════════════════════════════════════════════════════════════════════════
+
+Para MÁS INFO: Lee README.txt
+
+═══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,348 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                                                            ║
+║  VERIFICADOR DE SEGURIDAD WINDOWS v3.0                                    ║
+║  ¡EMPIEZA AQUÍ! (2 minutos)                                               ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+## ⚡ INICIO RÁPIDO (TODO EN 5 CLICS)
+
+PASO 1: Descarga
+└─ Descarga todos los archivos de GitHub
+└─ O copia la carpeta completa
+
+PASO 2: Verifica requisitos
+└─ Windows 10 o 11 ✓
+└─ Python 3.7+ instalado
+  └─ Descargar: https://www.python.org/downloads/
+  └─ IMPORTANTE: Marca "Add to PATH"
+
+PASO 3: Abre carpeta
+└─ Navega a la carpeta de "veri"
+└─ Verifica que esté el archivo EJECUTAR.bat
+
+PASO 4: EJECUTA (Lo importante)
+└─ Click derecho en EJECUTAR.bat
+└─ Selecciona "Ejecutar como administrador"
+└─ Haz clic en SÍ cuando pida permiso
+
+PASO 5: Espera
+└─ Verás progreso en pantalla
+└─ Durará 2-3 minutos
+└─ Se abrirá automáticamente el reporte
+
+¡LISTO! Tienes tu análisis de seguridad completo.
+
+---
+
+## 📊 ENTIENDO MI RESULTADO
+
+Cuando se abre el reporte (reporte_seguridad.html):
+
+LA PUNTUACIÓN GENERAL (Número Grande)
+┌─────────────────────┐
+│     Puntuación      │
+│       16%           │
+└─────────────────────┘
+
+Qué significa:
+• 16% = Tu sistema cumple 16 de 100 puntos posibles
+• Cada sistema es diferente, esto es NORMAL
+• La mayoría empieza entre 10-40%
+
+✓ Si ves 75%+ → Excelente ✓
+✓ Si ves 60-74% → Bueno, mejorar
+⚠ Si ves 40-59% → Deficiente, actuar pronto
+✗ Si ves 0-39% → Crítico, actuar AHORA
+
+LOS NÚMEROS POR ISO (Cuadrados de progreso)
+┌─────────────────────┐
+│ ISO/IEC A.9: 0%     │ ← Acceso y contraseñas
+│ ISO/IEC A.10: 0%    │ ← Criptografía
+│ ISO/IEC A.12: 25%   │ ← Operaciones
+│ ISO/IEC A.13: 50%   │ ← Perímetro (firewall)
+└─────────────────────┘
+
+Los cuadrados verdes/rojos muestran cada aspecto.
+
+LOS HALLAZGOS (Abajo)
+├─ Esos son los PROBLEMAS encontrados
+├─ Cada uno dice qué está mal
+├─ Dice cómo solucionarlo
+└─ Algunos son urgentes (CRÍTICO)
+
+---
+
+## 🔧 SOLUCIONAR PROBLEMAS
+
+### Problema: "No se abre el HTML"
+
+Solución rápida:
+1. Abre la carpeta "veri"
+2. Busca "reporte_seguridad.html"
+3. Haz doble clic
+4. Se abrirá en tu navegador
+
+### Problema: "Error de permiso"
+
+Solución:
+1. Click derecho en EJECUTAR.bat
+2. Selecciona "Ejecutar como administrador"
+3. Haz clic SÍ en el aviso
+
+### Problema: "Python no encontrado"
+
+Solución:
+1. Descarga Python: https://www.python.org/downloads/
+2. Instala marcando "Add Python to PATH"
+3. Reinicia la carpeta
+4. Intenta de nuevo
+
+### Problema: "No reconoce Python"
+
+Solución alternativa:
+1. Abre PowerShell como administrador
+2. Navega a la carpeta:
+   cd "C:\ruta\a\veri"
+3. Ejecuta:
+   python veri.py
+
+---
+
+## 📈 ¿QUÉ ESTÁ BIEN Y QUÉ ESTÁ MAL?
+
+El programa verifica 30 cosas específicas:
+
+✓ CONTRASEÑAS (6 verificaciones)
+  • ¿Son lo suficientemente largas? (12+ caracteres)
+  • ¿Requieren números, símbolos, mayúsculas? 
+  • ¿Se cambian cada 90 días?
+  • ¿Se bloquea después de 5 intentos fallos?
+  [En el ejemplo: TODAS MAL → 0%]
+
+✓ FIREWALL (4 verificaciones)
+  • ¿Está activado en home?
+  • ¿Está activado en trabajo?
+  • ¿Está activado en público?
+  [En el ejemplo: ALGUNAS BIEN → 50%]
+
+✓ ANTIMALWARE (4 verificaciones)
+  • ¿Windows Defender está activo?
+  • ¿Protección en tiempo real funciona?
+  • ¿Las definiciones están actualizadas?
+  [En el ejemplo: TODAS BIEN → 100%]
+
+✓ ACTUALIZACIONES (4 verificaciones)
+  • ¿Windows Update está automático?
+  • ¿Se actualiza regularmente?
+  [En el ejemplo: ALGUNAS BIEN → 50%]
+
+✓ AUDITORÍA (4 verificaciones)
+  • ¿Los logs de seguridad son grandes?
+  • ¿Se guardan cambios de usuarios?
+  [En el ejemplo: ALGUNAS BIEN → 100%]
+
+✓ USUARIOS (5 verificaciones)
+  • ¿La cuenta "Guest" está deshabilitada?
+  • ¿Usuario Admin no tiene nombre obvio?
+  • ¿UAC está habilitado?
+  [En el ejemplo: TODAS MAL → 0%]
+
+✓ ENCRIPTACIÓN (3 verificaciones)
+  • ¿El disco está cifrado (BitLocker)?
+  • ¿El sistema es NTFS (no FAT)?
+  [En el ejemplo: TODAS MAL → 0%]
+
+---
+
+## 🎯 SENCILLO: PRÓXIMOS PASOS
+
+### SI TU PUNTUACIÓN ES 0-40% (CRÍTICA):
+
+URGENTE (Hoy):
+1. Ve al reporte
+2. Busca hallazgos en rojo (CRÍTICO)
+3. Copia el comando que dice "Ejecutar:"
+4. Abre PowerShell como administrador
+5. Pega el comando y presiona Enter
+6. Repite para TODOS los críticos
+
+Ejemplo:
+  Problema: "Firewall deshabilitado"
+  Comando: netsh advfirewall set allprofiles state on
+  [Lo copias, lo ejecutas en PowerShell]
+
+### SI TU PUNTUACIÓN ES 40-75% (REGULAR):
+
+Importante (Esta semana):
+1. Identifica hallazgos en naranja (ALTO)
+2. Lee cada uno cuidadosamente
+3. Ejecuta los comandos recomendados
+4. Repite el programa para verificar cambios
+
+### SI TU PUNTUACIÓN ES 75%+ (BUENA):
+
+Mantenimiento:
+1. Revisa hallazgos en amarillo (MEDIO)
+2. Planifica mejoras a largo plazo
+3. Ejecuta el programa cada mes
+
+---
+
+## 📋 COMANDOS MÁS COMUNES
+
+Si ves estos problemas, copia estos comandos:
+
+CONTRASEÑAS DÉBILES:
+  net accounts /minpwlen:12
+
+SIN COMPLEJIDAD:
+  net accounts /complexity:on
+
+FIREWALL APAGADO:
+  netsh advfirewall set allprofiles state on
+
+DEFENDER INACTIVO:
+  Set-MpPreference -DisableRealtimeMonitoring $false
+
+GUEST HABILITADO:
+  net user Guest /active:no
+
+WINDOWS UPDATE NO AUTOMÁTICO:
+  Set-Service WuAuServ -StartupType Automatic
+
+---
+
+## 💡 CONSEJOS IMPORTANTES
+
+1. SIEMPRE EJECUTAR COMO ADMINISTRADOR
+   └─ Sin admin, no funciona bien
+   └─ Windows lo pedirá automáticamente
+
+2. EL PROGRAMA NO MODIFICA NADA
+   └─ Solo ANALIZA y REPORTA
+   └─ TÚ decides si ejecutar soluciones
+
+3. REPITE CADA MES
+   └─ La seguridad cambia
+   └─ Verás mejoras en tu puntuación
+   └─ Puedes seguir el progreso
+
+4. MANTÉN REPORTES VIEJOS
+   └─ Guardar: reporte_20251130.html
+   └─ Así ves cómo mejoras
+
+5. DOCUMENTA CAMBIOS
+   └─ Anota qué commands ejecutaste
+   └─ Útil para recordar qué se hizo
+
+---
+
+## ❓ PREGUNTAS FRECUENTES
+
+P: ¿Es seguro ejecutar esto?
+R: Totalmente. El programa solo LEE información.
+   No modifica nada sin que lo ejecutes manualmente.
+
+P: ¿Necesito internet?
+R: No. Todo funciona offline.
+
+P: ¿Cuánto tiempo tarda?
+R: 2-3 minutos típicamente.
+
+P: ¿Puedo ejecutar en varias computadoras?
+R: Sí. Copia la carpeta a cada máquina.
+
+P: ¿Los reportes son confidenciales?
+R: Sí. Se guardan local en tu carpeta.
+
+P: ¿Qué Windows necesito?
+R: Windows 10, 11, o Server 2016+
+
+P: ¿Funcionará en Windows 7?
+R: No. Usa Windows 10 o superior.
+
+---
+
+## 🌟 VER MÁS DETALLES
+
+Para información completa:
+├─ README.md - Documentación técnica
+├─ GUIA_COMPLETA.txt - Manual detallado
+├─ CAMBIOS_V3.0.txt - Qué hay nuevo
+└─ RESUMEN_V3.0.txt - Comparativa de versiones
+
+---
+
+## 🆘 CUANDO ALGO SALE MAL
+
+Si el programa se detiene:
+
+1. Cierra todo
+2. Abre PowerShell como administrador
+3. Navega:   cd C:\ruta\a\veri
+4. Ejecuta:  python veri.py
+5. Observa qué error sale
+6. Busca ese error arriba o en la documentación
+
+Errores comunes:
+• "No such file" → Carpeta equivocada
+• "Permission denied" → No ejecutó como admin
+• "Python not found" → Python no instalado
+• Cualquier otro → Ve a GUIA_COMPLETA.txt
+
+---
+
+## ✅ CUANDO TODO VA BIEN
+
+Verás en pantalla:
+✓ Cada módulo verificado
+✓ Checkmark o X por módulo
+✓ Mensaje "Generando reportes"
+✓ "reporte_seguridad.json" creado
+✓ "reporte_seguridad.html" creado
+✓ Navegador abre automáticamente
+✓ Números de puntuación mostrados
+
+¡LISTO! Todo funcionó correctamente.
+
+---
+
+## 🎓 APRENDE MIENTRAS VAS
+
+Este programa te enseña sobre:
+• Seguridad en Windows
+• Normas ISO 27001 y 27002
+• Criptografía y encriptación
+• Políticas de contraseñas
+• Firewalls y perímetro
+• Auditoría y logs
+• Protección contra malware
+
+Mientras lo usas, aprenderás.
+
+---
+
+## 📞 MÁS AYUDA
+
+Documentación:
+└─ GitHub: https://github.com/DinoPattta/veri
+
+Contacto:
+└─ Abre un issue en GitHub
+
+---
+
+## 🎉 RESUMEN
+
+1. Ejecuta EJECUTAR.bat ✓
+2. Espera 2-3 minutos ✓
+3. Se abre reporte HTML ✓
+4. Lee los problemas ✓
+5. Ejecuta los comandos recomendados ✓
+6. Repite cada mes ✓
+
+SIMPLE. RÁPIDO. EFECTIVO.
+
+¡Ahora sí! Haz clic en EJECUTAR.bat
+

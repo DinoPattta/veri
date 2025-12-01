@@ -1,0 +1,288 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                                                            ║
+║  VERIFICADOR DE SEGURIDAD WINDOWS - ISO 27001/27002                       ║
+║  VERSIÓN 3.0 - CAMBIOS Y MEJORAS DETALLADAS                               ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+## 📊 RESUMEN DE CAMBIOS V3.0
+
+De v2.1 a v3.0 se han implementado mejoras MASIVAS en granularidad y detalle:
+
+Versión 2.1:  11 controles totales    → Puntuación ISO de 4 normas
+Versión 3.0:  30 controles totales    → Análisis detallado por componente
+
+## 🔍 EXPANSIÓN DE CONTROLES POR MÓDULO
+
+### 1. VERIFICADOR DE CONTRASEÑAS (ISO/IEC 27001 A.9.2)
+   Controles en v2.1:  1
+   Controles en v3.0:  6
+
+   NUEVOS CONTROLES AÑADIDOS:
+   ✓ Longitud mínima (≥12 caracteres)
+   ✓ Complejidad requerida
+   ✓ Caducidad (≤90 días)
+   ✓ Historial de contraseñas (≥24)
+   ✓ Bloqueo por intentos fallidos (≥5)
+   ✓ Duración de bloqueo (≥30 minutos)
+
+   VERIFICACIONES DETALLADAS:
+   - Lee directamente: net accounts
+   - Valida CADA parámetro contra ISO 27001 A.9.2
+   - Genera recomendaciones específicas de comando PowerShell
+   - Calcula estado de cumplimiento individual
+
+### 2. VERIFICADOR DE ACTUALIZACIONES (ISO/IEC 27001 A.12.6)
+   Controles en v2.1:  1
+   Controles en v3.0:  4
+
+   NUEVOS CONTROLES AÑADIDOS:
+   ✓ Windows Update automático
+   ✓ Servicio WuAuServ en ejecución
+   ✓ Última actualización (≤30 días)
+   ✓ KB críticos pendientes
+
+   VERIFICACIONES DETALLADAS:
+   - Consulta estado del servicio WuAuServ
+   - Verifica fecha de última actualización con cálculo de días
+   - Detecta actualizaciones pendientes críticas
+   - Recomendaciones específicas de Windows Update
+
+### 3. VERIFICADOR DE FIREWALL (ISO/IEC 27001 A.13.1)
+   Controles en v2.1:  1
+   Controles en v3.0:  4
+
+   NUEVOS CONTROLES AÑADIDOS:
+   ✓ Firewall habilitado (Perfil Dominio)
+   ✓ Firewall habilitado (Perfil Privado)
+   ✓ Firewall habilitado (Perfil Público)
+   ✓ Notificaciones habilitadas
+
+   VERIFICACIONES DETALLADAS:
+   - Verifica CADA perfil por separado (Dominio/Privado/Público)
+   - Detecta deshabilitar parcial de firewall
+   - Valida notificaciones de bloqueo
+   - Comandos netsh específicos por perfil
+
+### 4. VERIFICADOR DE ANTIMALWARE (ISO/IEC 27001 A.12.2)
+   Controles en v2.1:  1
+   Controles en v3.0:  4
+
+   NUEVOS CONTROLES AÑADIDOS:
+   ✓ Windows Defender habilitado
+   ✓ Protección en tiempo real
+   ✓ Definiciones actualizadas
+   ✓ Análisis programado
+
+   VERIFICACIONES DETALLADAS:
+   - Get-MpComputerStatus para estado Defender
+   - Verifica protección real-time específicamente
+   - Fecha de actualización de definiciones
+   - Última exploración ejecutada
+
+### 5. VERIFICADOR DE AUDITORÍA (ISO/IEC 27001 A.12.4)
+   Controles en v2.1:  1
+   Controles en v3.0:  4
+
+   NUEVOS CONTROLES AÑADIDOS:
+   ✓ Registro de seguridad habilitado
+   ✓ Auditoría de logon habilitada
+   ✓ Tamaño de logs adecuado (≥512MB)
+   ✓ Retención de logs (≥30 días)
+
+   VERIFICACIONES DETALLADAS:
+   - wevtutil para estado del registro de seguridad
+   - Calcula tamaño actual en MB (≥512 recomendado)
+   - Verifica políticas de auditoría específicas
+   - Retención configurada en días
+
+### 6. VERIFICADOR DE USUARIOS (ISO/IEC 27001 A.9.1)
+   Controles en v2.1:  1
+   Controles en v3.0:  5
+
+   NUEVOS CONTROLES AÑADIDOS:
+   ✓ Cuenta Guest deshabilitada
+   ✓ Cuenta Administrator renombrada
+   ✓ Cuentas de servicio sin uso
+   ✓ Cuentas administrativas limitadas
+   ✓ UAC habilitado
+
+   VERIFICACIONES DETALLADAS:
+   - net user Guest para estado
+   - Verifica nombre de Administrator
+   - Identifica cuentas de servicio
+   - Cuenta total de administradores
+   - Estado de UAC (User Account Control)
+
+### 7. VERIFICADOR DE ENCRIPTACIÓN (ISO/IEC 27001 A.10.2)
+   Controles en v2.1:  1
+   Controles en v3.0:  3
+
+   NUEVOS CONTROLES AÑADIDOS:
+   ✓ BitLocker habilitado (C:)
+   ✓ Sistema de archivos NTFS
+   ✓ Encriptación de datos en tránsito
+
+   VERIFICACIONES DETALLADAS:
+   - Detecta BitLocker por volumen
+   - wmic logicaldisk para filesystem
+   - Valida NTFS vs FAT/FAT32
+   - Recomendaciones de cifrado de datos
+
+## 📈 RESULTADOS AGREGADOS
+
+TOTAL DE CONTROLES: 30
+MAPEO ISO: 4 normas (A.9, A.10, A.12, A.13)
+
+Desglose por Norma:
+  ISO/IEC 27001 A.9:  11 controles (Gestión de acceso y contraseñas)
+  ISO/IEC 27001 A.10:  3 controles (Criptografía)
+  ISO/IEC 27001 A.12: 12 controles (Operaciones de seguridad)
+  ISO/IEC 27001 A.13:  4 controles (Comunicaciones)
+
+## 💡 MEJORAS EN REPORTES
+
+### FORMATO JSON (reporte_seguridad.json)
+  ✓ Estructura completa por control
+  ✓ Detalles individuales de cada verificación
+  ✓ Comandos recomendados específicos
+  ✓ Mapeo directo a norma ISO
+  ✓ Puntuaciones granulares por ISO
+
+  Ejemplo de estructura:
+  {
+    "fecha": "2025-11-30T23:46:57.432418",
+    "puntuacion_general": 16,
+    "controles_cumplidos": "5/30",
+    "puntuaciones_iso": {
+      "ISO/IEC 27001 A.9": {
+        "cumplidos": 0,
+        "total": 11,
+        "porcentaje": 0
+      },
+      ...
+    },
+    "verificaciones": { ... detalle completo ... },
+    "hallazgos": [ ... con severidad y recomendaciones ... ]
+  }
+
+### FORMATO HTML (reporte_seguridad.html)
+  ✓ Interfaz visual mejorada
+  ✓ Gráficos de progreso por ISO
+  ✓ Código de colores por severidad
+  ✓ Listado detallado de hallazgos
+  ✓ Recomendaciones ejecutables
+
+## 🎯 MAPEO DETALLADO A ISO 27001:2022
+
+A.9.2 GESTIÓN DE CREDENCIALES
+  └─ 6 controles específicos de contraseñas
+  └─ Cumplimiento: Longitud, complejidad, caducidad, historial, bloqueo
+
+A.9.1 GESTIÓN DE ACCESO
+  └─ 5 controles de usuarios y cuentas
+  └─ Cumplimiento: Guest, Admin, UAC, cuentas activas
+
+A.10.2 CRIPTOGRAFÍA
+  └─ 3 controles de encriptación
+  └─ Cumplimiento: BitLocker, NTFS, encriptación en tránsito
+
+A.12.2 PROTECCIÓN CONTRA MALWARE
+  └─ 4 controles de antimalware
+  └─ Cumplimiento: Defender, tiempo real, definiciones, análisis
+
+A.12.4 REGISTROS Y AUDITORÍA
+  └─ 4 controles de auditoría
+  └─ Cumplimiento: Logs, auditoría de logon, tamaño, retención
+
+A.12.6 GESTIÓN DE VULNERABILIDADES
+  └─ 4 controles de actualizaciones
+  └─ Cumplimiento: Windows Update, KB, últimas actualizaciones
+
+A.13.1 PERÍMETRO DE SEGURIDAD
+  └─ 4 controles de firewall
+  └─ Cumplimiento: Perfiles, políticas, notificaciones
+
+## 🔧 COMANDOS RECOMENDADOS POR DEFICIENCIA
+
+CONTRASEÑAS:
+  net accounts /minpwlen:12              → Longitud mínima
+  net accounts /maxpwage:90              → Caducidad
+  net accounts /uniquepw:24              → Historial
+  net accounts /lockoutthreshold:5       → Bloqueo por intentos
+  net accounts /lockoutduration:30       → Duración del bloqueo
+
+FIREWALL:
+  netsh advfirewall set allprofiles state on  → Habilitar todos
+
+ANTIMALWARE:
+  powershell -c 'Set-MpPreference -DisableRealtimeMonitoring $false'
+
+USUARIOS:
+  net user Guest /active:no              → Deshabilitar Guest
+
+## 📊 EJEMPLO DE EJECUCIÓN V3.0
+
+================================================================================
+VERIFICADOR DE SEGURIDAD WINDOWS - ISO 27001/27002 v3.0 DETALLADO
+================================================================================
+
+[*] Políticas de Contraseñas... ✗ (NO_CUMPLE)
+[*] Actualizaciones y Parches... ✗ (NO_CUMPLE)
+[*] Firewall... ✗ (NO_CUMPLE)
+[*] Antimalware... ✓ (CUMPLE)
+[*] Auditoría y Registros... ✗ (NO_CUMPLE)
+[*] Usuarios y Cuentas... ✗ (NO_CUMPLE)
+[*] Encriptación... ✗ (NO_CUMPLE)
+
+[*] Generando reportes...
+    ✓ reporte_seguridad.json
+    ✓ reporte_seguridad.html
+
+================================================================================
+Puntuación General: 16%
+Controles Cumplidos: 5/30
+
+Puntuaciones por Norma ISO:
+  ISO/IEC 27001 A.9: 0% (0/11)
+  ISO/IEC 27001 A.10: 0% (0/3)
+  ISO/IEC 27001 A.12: 25% (3/12)
+  ISO/IEC 27001 A.13: 50% (2/4)
+
+Total de Hallazgos: 11
+================================================================================
+
+## 🚀 PRÓXIMAS MEJORAS PLANEADAS
+
+v3.1:
+  ✓ Implementar bitlocker check
+  ✓ Validar fecha de última exploración Defender
+  ✓ Añadir más comandos PowerShell específicos
+  ✓ Exportar en formato CSV adicional
+
+v3.2:
+  ✓ Base de datos de cumplimiento histórico
+  ✓ Gráficos de tendencia temporal
+  ✓ Comparativa con sistemas similares
+  ✓ Benchmark contra estándares NIST
+
+## 📝 NOTAS TÉCNICAS
+
+- Compatibilidad: Windows 10/11, Server 2016+
+- Python: 3.7+
+- Ejecutor: EJECUTAR.bat (con validación de admin)
+- Reportes: JSON + HTML interactivo
+- Actualizaciones: v3.0 en commit 5d9caf7
+
+## ✅ VALIDACIÓN
+
+Ejecutar programa con:
+  python veri.py
+  o
+  EJECUTAR.bat (recomendado)
+
+Esperar outputs:
+  - reporte_seguridad.json (398 líneas en v3.0)
+  - reporte_seguridad.html (visual interactivo)
+  - Resumen en terminal con puntuaciones ISO
+

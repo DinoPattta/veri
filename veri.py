@@ -1,18 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-╔═══════════════════════════════════════════════════════════════════════════╗
-║                                                                           ║
-║         VERIFICADOR DE SEGURIDAD WINDOWS - ISO 27001/27002               ║
-║                          Versión 2.0 Integrada                           ║
-║                                                                           ║
-║  Sistema de Auditoría Profesional basado en Normas ISO Internacionales   ║
-║                                                                           ║
-╚═══════════════════════════════════════════════════════════════════════════╝
-
-Autor: Sistema de Auditoría de Seguridad
-Base: ISO/IEC 27001:2022, 27002:2022, 27035:2016
-Requisitos: Windows 10/11, Python 3.7+, Permisos Administrativos
+VERIFICADOR DE SEGURIDAD WINDOWS - ISO 27001/27002
+Versión 2.1 - Con Puntuación por ISO
 """
 
 import sys
@@ -25,10 +15,6 @@ from enum import Enum
 from abc import ABC, abstractmethod
 
 
-# ============================================================================
-# VALIDACIONES INICIALES
-# ============================================================================
-
 if sys.version_info < (3, 7):
     print("ERROR: Se requiere Python 3.7 o superior")
     sys.exit(1)
@@ -37,10 +23,6 @@ if not sys.platform.startswith('win'):
     print("ERROR: Este programa solo funciona en Windows")
     sys.exit(1)
 
-
-# ============================================================================
-# ENUMERACIONES Y CLASES BASE
-# ============================================================================
 
 class NivelSeveridad(Enum):
     CRITICO = "CRÍTICO"
@@ -57,7 +39,7 @@ class VerificadorBase(ABC):
 
 
 # ============================================================================
-# MODULO 1: VERIFICADOR DE CONTRASEÑAS
+# MODULO 1: VERIFICADOR DE CONTRASEÑAS (ISO A.9.2)
 # ============================================================================
 
 class VerificadorContraseñas(VerificadorBase):
@@ -66,11 +48,18 @@ class VerificadorContraseñas(VerificadorBase):
             "componente": "Políticas de Contraseñas",
             "estado": "VERIFICADO",
             "hallazgos": [],
-            "norma_referencia": "ISO/IEC 27001 A.9.2.1"
+            "norma_referencia": "ISO/IEC 27001 A.9.2",
+            "controles": [
+                {"nombre": "Longitud mínima", "cumple": False},
+                {"nombre": "Complejidad", "cumple": False},
+                {"nombre": "Caducidad", "cumple": False}
+            ]
         }
         
         try:
-            if self._verificar_longitud_minima()["estado"] == "NO_CUMPLE":
+            if self._verificar_longitud_minima()["estado"] == "CUMPLE":
+                resultado["controles"][0]["cumple"] = True
+            else:
                 resultado["hallazgos"].append({
                     "titulo": "Longitud mínima de contraseña insuficiente",
                     "descripcion": "Menor a 8 caracteres",
@@ -79,7 +68,9 @@ class VerificadorContraseñas(VerificadorBase):
                     "recomendacion": "Establecer mínimo 12 caracteres"
                 })
             
-            if self._verificar_complejidad()["estado"] == "NO_CUMPLE":
+            if self._verificar_complejidad()["estado"] == "CUMPLE":
+                resultado["controles"][1]["cumple"] = True
+            else:
                 resultado["hallazgos"].append({
                     "titulo": "Complejidad de contraseña no requerida",
                     "descripcion": "Las contraseñas no requieren mayúsculas, minúsculas, números y símbolos",
@@ -88,7 +79,9 @@ class VerificadorContraseñas(VerificadorBase):
                     "recomendacion": "Habilitar requisito de contraseñas complejas"
                 })
             
-            if self._verificar_caducidad()["estado"] == "NO_CUMPLE":
+            if self._verificar_caducidad()["estado"] == "CUMPLE":
+                resultado["controles"][2]["cumple"] = True
+            else:
                 resultado["hallazgos"].append({
                     "titulo": "Caducidad de contraseña no configurada",
                     "descripcion": "Sin política de cambio periódico",
@@ -132,7 +125,7 @@ class VerificadorContraseñas(VerificadorBase):
 
 
 # ============================================================================
-# MODULO 2: VERIFICADOR DE ACTUALIZACIONES
+# MODULO 2: VERIFICADOR DE ACTUALIZACIONES (ISO A.12.6)
 # ============================================================================
 
 class VerificadorActualizaciones(VerificadorBase):
@@ -141,11 +134,16 @@ class VerificadorActualizaciones(VerificadorBase):
             "componente": "Actualizaciones y Parches",
             "estado": "VERIFICADO",
             "hallazgos": [],
-            "norma_referencia": "ISO/IEC 27001 A.12.6.1"
+            "norma_referencia": "ISO/IEC 27001 A.12.6",
+            "controles": [
+                {"nombre": "Windows Update automático", "cumple": False}
+            ]
         }
         
         try:
-            if self._verificar_wu_automatico()["estado"] == "DESHABILITADO":
+            if self._verificar_wu_automatico()["estado"] == "HABILITADO":
+                resultado["controles"][0]["cumple"] = True
+            else:
                 resultado["hallazgos"].append({
                     "titulo": "Windows Update automático deshabilitado",
                     "descripcion": "Las actualizaciones automáticas no están habilitadas",
@@ -172,7 +170,7 @@ class VerificadorActualizaciones(VerificadorBase):
 
 
 # ============================================================================
-# MODULO 3: VERIFICADOR DE FIREWALL
+# MODULO 3: VERIFICADOR DE FIREWALL (ISO A.13.1)
 # ============================================================================
 
 class VerificadorFirewall(VerificadorBase):
@@ -181,11 +179,16 @@ class VerificadorFirewall(VerificadorBase):
             "componente": "Firewall",
             "estado": "VERIFICADO",
             "hallazgos": [],
-            "norma_referencia": "ISO/IEC 27001 A.13.1.1"
+            "norma_referencia": "ISO/IEC 27001 A.13.1",
+            "controles": [
+                {"nombre": "Firewall habilitado", "cumple": False}
+            ]
         }
         
         try:
-            if self._verificar_estado()["estado"] == "DESHABILITADO":
+            if self._verificar_estado()["estado"] == "HABILITADO":
+                resultado["controles"][0]["cumple"] = True
+            else:
                 resultado["hallazgos"].append({
                     "titulo": "Firewall deshabilitado",
                     "descripcion": "El firewall de Windows no está habilitado",
@@ -212,7 +215,7 @@ class VerificadorFirewall(VerificadorBase):
 
 
 # ============================================================================
-# MODULO 4: VERIFICADOR DE ANTIMALWARE
+# MODULO 4: VERIFICADOR DE ANTIMALWARE (ISO A.12.2)
 # ============================================================================
 
 class VerificadorAntimalware(VerificadorBase):
@@ -221,11 +224,16 @@ class VerificadorAntimalware(VerificadorBase):
             "componente": "Antimalware",
             "estado": "VERIFICADO",
             "hallazgos": [],
-            "norma_referencia": "ISO/IEC 27001 A.12.2.1"
+            "norma_referencia": "ISO/IEC 27001 A.12.2",
+            "controles": [
+                {"nombre": "Windows Defender habilitado", "cumple": False}
+            ]
         }
         
         try:
-            if self._verificar_defender()["estado"] == "DESHABILITADO":
+            if self._verificar_defender()["estado"] == "HABILITADO":
+                resultado["controles"][0]["cumple"] = True
+            else:
                 resultado["hallazgos"].append({
                     "titulo": "Windows Defender deshabilitado",
                     "descripcion": "Protección en tiempo real no está activa",
@@ -252,7 +260,7 @@ class VerificadorAntimalware(VerificadorBase):
 
 
 # ============================================================================
-# MODULO 5: VERIFICADOR DE AUDITORÍA
+# MODULO 5: VERIFICADOR DE AUDITORÍA (ISO A.12.4)
 # ============================================================================
 
 class VerificadorAuditoria(VerificadorBase):
@@ -261,12 +269,17 @@ class VerificadorAuditoria(VerificadorBase):
             "componente": "Auditoría y Registros",
             "estado": "VERIFICADO",
             "hallazgos": [],
-            "norma_referencia": "ISO/IEC 27001 A.12.4.1"
+            "norma_referencia": "ISO/IEC 27001 A.12.4",
+            "controles": [
+                {"nombre": "Tamaño de logs adecuado", "cumple": False}
+            ]
         }
         
         try:
             tamaño = self._verificar_tamaño_logs().get("tamaño_mb", 10)
-            if tamaño < 10:
+            if tamaño >= 10:
+                resultado["controles"][0]["cumple"] = True
+            else:
                 resultado["hallazgos"].append({
                     "titulo": "Registro de seguridad con tamaño insuficiente",
                     "descripcion": f"Tamaño máximo: {tamaño}MB (mínimo recomendado: 512MB)",
@@ -301,7 +314,7 @@ class VerificadorAuditoria(VerificadorBase):
 
 
 # ============================================================================
-# MODULO 6: VERIFICADOR DE USUARIOS
+# MODULO 6: VERIFICADOR DE USUARIOS (ISO A.9.1)
 # ============================================================================
 
 class VerificadorUsuarios(VerificadorBase):
@@ -310,11 +323,16 @@ class VerificadorUsuarios(VerificadorBase):
             "componente": "Usuarios y Cuentas",
             "estado": "VERIFICADO",
             "hallazgos": [],
-            "norma_referencia": "ISO/IEC 27001 A.9.1.1"
+            "norma_referencia": "ISO/IEC 27001 A.9.1",
+            "controles": [
+                {"nombre": "Cuenta Guest deshabilitada", "cumple": False}
+            ]
         }
         
         try:
-            if self._verificar_guest()["estado"] == "HABILITADA":
+            if self._verificar_guest()["estado"] == "DESHABILITADA":
+                resultado["controles"][0]["cumple"] = True
+            else:
                 resultado["hallazgos"].append({
                     "titulo": "Cuenta Guest habilitada",
                     "descripcion": "Cuenta de invitado está habilitada",
@@ -337,11 +355,11 @@ class VerificadorUsuarios(VerificadorBase):
     
     def _verificar_guest(self):
         output = self._ejecutar_cmd("net user Guest")
-        return {"estado": "HABILITADA"} if "Account active" in output and "No" not in output else {"estado": "DESHABILITADA"}
+        return {"estado": "DESHABILITADA"} if "Account active" in output and "No" in output else {"estado": "HABILITADA"}
 
 
 # ============================================================================
-# MODULO 7: VERIFICADOR DE ENCRIPTACIÓN
+# MODULO 7: VERIFICADOR DE ENCRIPTACIÓN (ISO A.10.2)
 # ============================================================================
 
 class VerificadorEncriptacion(VerificadorBase):
@@ -350,12 +368,17 @@ class VerificadorEncriptacion(VerificadorBase):
             "componente": "Encriptación",
             "estado": "VERIFICADO",
             "hallazgos": [],
-            "norma_referencia": "ISO/IEC 27001 A.10.2.1"
+            "norma_referencia": "ISO/IEC 27001 A.10.2",
+            "controles": [
+                {"nombre": "Sistema de archivos NTFS", "cumple": False}
+            ]
         }
         
         try:
             fs = self._verificar_ntfs()
-            if fs["tiene_fat32"] or fs["tiene_fat"]:
+            if fs["tiene_ntfs"] and not (fs["tiene_fat32"] or fs["tiene_fat"]):
+                resultado["controles"][0]["cumple"] = True
+            else:
                 resultado["hallazgos"].append({
                     "titulo": "Sistema de archivos poco seguro",
                     "descripcion": "Se detectaron particiones con FAT32",
@@ -386,7 +409,7 @@ class VerificadorEncriptacion(VerificadorBase):
 
 
 # ============================================================================
-# GENERADOR DE REPORTES
+# GENERADOR DE REPORTES CON PUNTUACIÓN POR ISO
 # ============================================================================
 
 class GeneradorReportes:
@@ -394,7 +417,8 @@ class GeneradorReportes:
         self.timestamp = datetime.now()
         self.hallazgos = []
         self.verificaciones = {}
-        self.puntuacion = 0
+        self.puntuacion_general = 0
+        self.puntuaciones_iso = {}
     
     def agregar_verificacion(self, nombre, resultado):
         self.verificaciones[nombre] = resultado
@@ -402,18 +426,49 @@ class GeneradorReportes:
             for h in resultado["hallazgos"]:
                 self.hallazgos.append(h)
     
-    def calcular_puntuacion(self):
-        if not self.verificaciones:
-            return 0
-        total = len(self.verificaciones)
-        cumple = sum(1 for v in self.verificaciones.values() if v.get("estado") == "CUMPLE")
-        self.puntuacion = int((cumple / total) * 100)
-        return self.puntuacion
+    def calcular_puntuaciones(self):
+        """Calcula puntuación general y por ISO"""
+        # Mapeo de ISO a verificadores
+        iso_map = {
+            "ISO/IEC 27001 A.9": ["Políticas de Contraseñas", "Usuarios y Cuentas"],
+            "ISO/IEC 27001 A.10": ["Encriptación"],
+            "ISO/IEC 27001 A.12": ["Actualizaciones y Parches", "Antimalware", "Auditoría y Registros"],
+            "ISO/IEC 27001 A.13": ["Firewall"]
+        }
+        
+        # Calcular puntuación por ISO
+        for iso, componentes in iso_map.items():
+            total_controles = 0
+            controles_cumplidos = 0
+            
+            for componente in componentes:
+                if componente in self.verificaciones:
+                    v = self.verificaciones[componente]
+                    if "controles" in v:
+                        total_controles += len(v["controles"])
+                        controles_cumplidos += sum(1 for c in v["controles"] if c["cumple"])
+            
+            if total_controles > 0:
+                porcentaje = int((controles_cumplidos / total_controles) * 100)
+                self.puntuaciones_iso[iso] = {
+                    "cumplidos": controles_cumplidos,
+                    "total": total_controles,
+                    "porcentaje": porcentaje
+                }
+        
+        # Calcular puntuación general
+        if self.verificaciones:
+            total = len(self.verificaciones)
+            cumple = sum(1 for v in self.verificaciones.values() if v.get("estado") == "CUMPLE")
+            self.puntuacion_general = int((cumple / total) * 100)
+        
+        return self.puntuacion_general
     
     def generar_json(self):
         contenido = {
             "fecha": self.timestamp.isoformat(),
-            "puntuacion": self.puntuacion,
+            "puntuacion_general": self.puntuacion_general,
+            "puntuaciones_iso": self.puntuaciones_iso,
             "total_hallazgos": len(self.hallazgos),
             "verificaciones": self.verificaciones,
             "hallazgos": self.hallazgos
@@ -427,6 +482,27 @@ class GeneradorReportes:
             "CRÍTICO": "#dc3545", "ALTO": "#fd7e14", "MEDIO": "#ffc107",
             "BAJO": "#28a745", "INFORMACIÓN": "#17a2b8"
         }
+        
+        # HTML para puntuaciones por ISO
+        iso_html = ""
+        for iso, datos in sorted(self.puntuaciones_iso.items()):
+            porcentaje = datos["porcentaje"]
+            color = "#28a745" if porcentaje >= 75 else "#ffc107" if porcentaje >= 60 else "#dc3545"
+            iso_html += f"""
+            <div style="background: white; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid {color};">
+                <h4 style="margin: 0 0 10px 0; color: #333;">{iso}</h4>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="flex: 1;">
+                        <div style="background: #f0f0f0; height: 20px; border-radius: 10px; overflow: hidden;">
+                            <div style="background: {color}; height: 100%; width: {porcentaje}%; transition: width 0.3s;"></div>
+                        </div>
+                    </div>
+                    <span style="margin-left: 15px; font-weight: bold; color: {color}; min-width: 60px; text-align: right;">
+                        {porcentaje}% ({datos['cumplidos']}/{datos['total']})
+                    </span>
+                </div>
+            </div>
+            """
         
         hallazgos_html = ""
         for h in self.hallazgos:
@@ -449,26 +525,35 @@ class GeneradorReportes:
     <title>Reporte de Seguridad</title>
     <style>
         body {{ font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }}
-        .container {{ max-width: 1000px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }}
+        .container {{ max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }}
         h1 {{ color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }}
-        .resumen {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 20px 0; }}
+        h2 {{ color: #2c3e50; margin-top: 30px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; }}
+        .resumen {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 20px 0; }}
         .tarjeta {{ padding: 20px; border-radius: 8px; text-align: center; color: white; }}
         .puntuacion {{ background: linear-gradient(135deg, #667eea, #764ba2); font-size: 48px; font-weight: bold; padding: 30px; }}
+        .seccion {{ margin: 20px 0; }}
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🔒 Reporte de Verificación de Seguridad Windows</h1>
         <p><strong>Fecha:</strong> {self.timestamp.strftime('%d/%m/%Y %H:%M:%S')}</p>
-        <p><strong>Normas:</strong> ISO/IEC 27001, 27002, 27035</p>
+        <p><strong>Normas:</strong> ISO/IEC 27001:2022, 27002:2022</p>
+        
         <div class="resumen">
-            <div class="tarjeta puntuacion">{self.puntuacion}%<br><small>Puntuación</small></div>
+            <div class="tarjeta puntuacion">{self.puntuacion_general}%<br><small>Puntuación General</small></div>
             <div class="tarjeta" style="background: linear-gradient(135deg, #667eea, #764ba2);">
                 {len(self.hallazgos)}<br><small>Hallazgos</small>
             </div>
         </div>
-        <div style="margin-top: 30px;">
-            <h2>Detalle de Hallazgos</h2>
+        
+        <div class="seccion">
+            <h2>📊 Puntuación por Norma ISO</h2>
+            {iso_html}
+        </div>
+        
+        <div class="seccion">
+            <h2>🔍 Detalle de Hallazgos</h2>
             {hallazgos_html if self.hallazgos else "<p>✓ No se encontraron hallazgos críticos.</p>"}
         </div>
     </div>
@@ -493,12 +578,12 @@ def main():
         reportes = GeneradorReportes()
         
         verificadores = {
-            "Contraseñas": VerificadorContraseñas(),
-            "Actualizaciones": VerificadorActualizaciones(),
+            "Políticas de Contraseñas": VerificadorContraseñas(),
+            "Actualizaciones y Parches": VerificadorActualizaciones(),
             "Firewall": VerificadorFirewall(),
             "Antimalware": VerificadorAntimalware(),
-            "Auditoría": VerificadorAuditoria(),
-            "Usuarios": VerificadorUsuarios(),
+            "Auditoría y Registros": VerificadorAuditoria(),
+            "Usuarios y Cuentas": VerificadorUsuarios(),
             "Encriptación": VerificadorEncriptacion()
         }
         
@@ -512,7 +597,7 @@ def main():
             except Exception as e:
                 print(f"✗ ({str(e)})")
         
-        reportes.calcular_puntuacion()
+        reportes.calcular_puntuaciones()
         
         print("\n[*] Generando reportes...")
         reportes.generar_json()
@@ -521,8 +606,11 @@ def main():
         print("    ✓ reporte_seguridad.html")
         
         print("\n" + "="*80)
-        print(f"Puntuación General: {reportes.puntuacion}%")
-        print(f"Total de Hallazgos: {len(reportes.hallazgos)}")
+        print(f"Puntuación General: {reportes.puntuacion_general}%")
+        print("\nPuntuaciones por ISO:")
+        for iso, datos in sorted(reportes.puntuaciones_iso.items()):
+            print(f"  {iso}: {datos['porcentaje']}% ({datos['cumplidos']}/{datos['total']})")
+        print(f"\nTotal de Hallazgos: {len(reportes.hallazgos)}")
         print("="*80 + "\n")
         
         try:

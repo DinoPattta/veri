@@ -1,0 +1,498 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                                                            ║
+║  GUÍA COMPLETA - VERIFICADOR DE SEGURIDAD WINDOWS v3.0                    ║
+║  ISO 27001:2022 / 27002:2022                                              ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+## 🎯 INICIO RÁPIDO (30 segundos)
+
+1. Descarga todos los archivos en una carpeta
+2. Haz clic en: EJECUTAR.bat
+3. Espera a que termine (2-3 minutos)
+4. Se abrirá automáticamente: reporte_seguridad.html
+
+Listo! Tienes tu análisis de seguridad completo.
+
+---
+
+## 📋 REQUISITOS
+
+SISTEMA OPERATIVO:
+  • Windows 10 Home/Pro/Enterprise
+  • Windows 11 cualquier versión
+  • Windows Server 2016 o superior
+
+PYTHON:
+  • Versión 3.7 o superior
+  • Descargar de: https://www.python.org/downloads/
+  • IMPORTANTE: Marcar "Add Python to PATH" durante instalación
+
+PERMISOS:
+  • Ejecutar como ADMINISTRADOR (requerido)
+  • El script verifica automáticamente permisos
+  • Si no tienes admin, no funcionarán los comandos de verificación
+
+ESPACIO DISCO:
+  • 5 MB para el programa
+  • 2 MB para reportes generados
+
+---
+
+## 🚀 MÉTODOS DE EJECUCIÓN
+
+### MÉTODO 1: EJECUTAR.bat (RECOMENDADO)
+   
+   ✓ Más simple
+   ✓ Verifica automáticamente requisitos
+   ✓ Abre reporte HTML al terminar
+   ✓ Mejor manejo de errores
+   
+   Pasos:
+   1. Doble clic en EJECUTAR.bat
+   2. Espera mensaje "Verificación completada"
+   3. El navegador abre reporte automático
+
+### MÉTODO 2: PowerShell (AVANZADO)
+
+   Abre PowerShell como administrador y ejecuta:
+   
+   cd "C:\ruta\a\la\carpeta\veri"
+   python veri.py
+   
+   El reporte se genera en la carpeta actual.
+
+### MÉTODO 3: Línea de comandos (CMD)
+
+   Abre CMD como administrador y ejecuta:
+   
+   cd C:\ruta\a\la\carpeta\veri
+   python veri.py
+
+### MÉTODO 4: Ejecutar directo desde carpeta
+
+   Si Python está en PATH:
+   
+   1. Navega a carpeta de veri
+   2. Shift + Click derecho > "Abrir PowerShell aquí"
+   3. Escribe: python veri.py
+   4. Presiona Enter
+
+---
+
+## 📊 ENTENDIENDO LOS REPORTES
+
+### REPORTE HTML (reporte_seguridad.html)
+
+   SECCIÓN 1: PUNTUACIÓN GENERAL
+   ┌─────────────────────────────┐
+   │    Puntuación General: 16%  │
+   │    Controles Cumplidos: 5   │
+   │    Total Hallazgos: 11      │
+   └─────────────────────────────┘
+   
+   Significado:
+   • 16% = Tu sistema cumple 16% de todos los controles
+   • 5 controles = De 30 totales, 5 cumplen requisitos
+   • 11 hallazgos = 11 problemas/deficiencias encontrados
+
+   COLOR REFERENCIA:
+   ✓ Verde (≥75%)   = Excelente
+   ⚠ Amarillo (60-74%) = Aceptable, mejorar
+   ✗ Rojo (<60%)    = Crítico, requiere acción inmediata
+
+   SECCIÓN 2: PUNTUACIÓN POR NORMA ISO
+   
+   Muestra cumplimiento ESPECÍFICO por cada estándar:
+   
+   ISO/IEC 27001 A.9:  0% (0/11 controles)
+   └─ Gestión de acceso y contraseñas → CRÍTICO
+   
+   ISO/IEC 27001 A.10: 0% (0/3 controles)
+   └─ Criptografía y encriptación → CRÍTICO
+   
+   ISO/IEC 27001 A.12: 25% (3/12 controles)
+   └─ Operaciones de seguridad → DEFICIENTE
+   
+   ISO/IEC 27001 A.13: 50% (2/4 controles)
+   └─ Perímetro de seguridad → REGULAR
+
+   SECCIÓN 3: DETALLE DE CONTROLES
+   
+   Por cada norma, lista TODOS los controles verificados:
+   
+   ✓ Control CUMPLE (verde)
+   ✗ Control NO CUMPLE (rojo)
+   
+   Junto a cada control:
+   • Nombre específico del control
+   • Estado actual
+   • Valor actual del sistema
+
+   SECCIÓN 4: HALLAZGOS DETALLADOS
+   
+   Cada hallazgo incluye:
+   
+   ⚠ TÍTULO DEL PROBLEMA
+   └─ Severidad: [CRÍTICO | ALTO | MEDIO | BAJO]
+   └─ Descripción: Qué está mal
+   └─ Norma ISO: A.X.X referencia específica
+   └─ Recomendación: Comando exacto para arreglar
+
+### REPORTE JSON (reporte_seguridad.json)
+
+   Archivo técnico para:
+   • Importación a sistemas
+   • Auditoría documental
+   • Almacenamiento de histórico
+   • Procesamiento automatizado
+
+   Estructura:
+   {
+     "fecha": "2025-11-30T23:46:57",
+     "puntuacion_general": 16,
+     "controles_cumplidos": "5/30",
+     "puntuaciones_iso": { ... },
+     "total_hallazgos": 11,
+     "verificaciones": { ... detalle por componente ... },
+     "hallazgos": [ ... lista de todos los problemas ... ]
+   }
+
+   Abierto con:
+   • Notepad
+   • Visual Studio Code
+   • Cualquier lector JSON online
+
+---
+
+## 🔧 ACTUACIÓN ANTE HALLAZGOS
+
+### PASO 1: PRIORIZAR POR SEVERIDAD
+
+   CRÍTICO (Rojo)
+   └─ Actuar INMEDIATAMENTE
+   └─ Ejemplos: Firewall deshabilitado, Defender inactivo
+   └─ Tiempo: Hoy
+
+   ALTO (Naranja)
+   └─ Actuar en los próximos 3-7 días
+   └─ Ejemplos: Contraseñas débiles, bloqueo de intentos
+   └─ Tiempo: Esta semana
+
+   MEDIO (Amarillo)
+   └─ Actuar en los próximos 15-30 días
+   └─ Ejemplos: Logs insuficientes, actualizaciones pendientes
+   └─ Tiempo: Este mes
+
+   BAJO (Verde)
+   └─ Considerar en próximas revisiones
+   └─ Ejemplos: Optimizaciones, mejoras
+   └─ Tiempo: Próximo trimestre
+
+### PASO 2: EJECUTAR RECOMENDACIONES
+
+   Cada hallazgo incluye un comando específico:
+   
+   EJEMPLO:
+   Problema: "Longitud mínima de contraseña insuficiente"
+   Recomendación: "Ejecutar: net accounts /minpwlen:12"
+   
+   Solución:
+   1. Abre PowerShell como administrador
+   2. Copia el comando exacto
+   3. Presiona Enter
+   4. Espera confirmación
+   5. Ejecuta el programa nuevamente
+   6. Verifica que el hallazgo desapareció
+
+### PASO 3: DOCUMENTAR CAMBIOS
+
+   Después de aplicar correcciones:
+   
+   1. Ejecuta el programa nuevamente: python veri.py
+   2. Guarda el nuevo reporte (ej: reporte_20251130.html)
+   3. Compara puntuaciones:
+      • Antes: 16%
+      • Después: XX%
+   4. Documenta los cambios realizados
+
+---
+
+## 📈 INTERPRETACIÓN DE RESULTADOS
+
+### PUNTUACIÓN GENERAL
+
+   90-100%: ✓ EXCELENTE
+   • Sistema muy bien configurado
+   • Solo ajustes menores necesarios
+   • Cumplimiento máximo con ISO 27001
+
+   75-89%: ✓ BUENO
+   • Sistema adecuadamente protegido
+   • Pocos problemas identificados
+   • Algunos ajustes recomendados
+
+   60-74%: ⚠ ACEPTABLE
+   • Sistema tiene deficiencias moderadas
+   • Necesita varias mejoras
+   • Riesgo moderado de seguridad
+
+   40-59%: ✗ DEFICIENTE
+   • Sistema tiene problemas significativos
+   • Múltiples hallazgos críticos/altos
+   • Riesgo elevado de seguridad
+
+   0-39%: ✗ CRÍTICO
+   • Sistema ALTAMENTE vulnerable
+   • Acción INMEDIATA requerida
+   • Posibles brechas de seguridad activas
+
+### ANÁLISIS POR NORMA ISO
+
+   Cada norma mide un aspecto:
+
+   A.9 - GESTIÓN DE ACCESO (11 controles)
+   └─ Contraseñas, usuarios, cuentas
+   └─ 0% = Riesgo crítico de acceso no autorizado
+   └─ 100% = Acceso perfectamente controlado
+
+   A.10 - CRIPTOGRAFÍA (3 controles)
+   └─ Cifrado, BitLocker, protección datos
+   └─ 0% = Datos sin cifrar, vulnerables
+   └─ 100% = Todos los datos cifrados
+
+   A.12 - OPERACIONES (12 controles)
+   └─ Actualizaciones, antimalware, auditoría
+   └─ 0% = Sistema vulnerable a malware/sin parches
+   └─ 100% = Sistema actualizado y protegido
+
+   A.13 - PERÍMETRO (4 controles)
+   └─ Firewall, notificaciones, segmentación
+   └─ 0% = Red completamente expuesta
+   └─ 100% = Red perfectamente segmentada
+
+### HALLAZGOS
+
+   Cantidad normal según configuración:
+   
+   Sistema nuevo: 8-15 hallazgos típicos
+   Sistema empresarial bien gestionado: 2-5 hallazgos
+   Sistema crítico: 0-2 hallazgos
+
+---
+
+## 🆘 SOLUCIÓN DE PROBLEMAS
+
+### PROBLEMA: "Error de permiso denegado"
+   
+   Causa: No ejecutado como administrador
+   Solución:
+   1. Haz clic derecho en EJECUTAR.bat
+   2. Selecciona "Ejecutar como administrador"
+   3. Acepta el aviso de UAC
+
+### PROBLEMA: "Python no encontrado"
+   
+   Causa: Python no está en PATH
+   Soluciones:
+   A) Reinstala Python y marca "Add to PATH"
+   B) Especifica ruta completa a Python:
+      C:\Users\YourName\AppData\Local\Programs\Python\Python311\python.exe veri.py
+
+### PROBLEMA: "Archivo veri.py no encontrado"
+   
+   Causa: Ejecutada desde directorio diferente
+   Solución:
+   1. Abre PowerShell
+   2. Navega a la carpeta con el programa:
+      cd "C:\ruta\a\veri\"
+   3. Ejecuta: python veri.py
+
+### PROBLEMA: "Error al ejecutar net accounts"
+   
+   Causa: Comando no disponible en tu Windows
+   Solución: No crítico, continúa con verificaciones
+   El programa genera reporte parcial pero válido
+
+### PROBLEMA: "No se abre el HTML automático"
+   
+   Causa: Navegador predeterminado no configurado
+   Solución:
+   1. Navega manualmente a carpeta
+   2. Haz doble clic en: reporte_seguridad.html
+   3. Se abrirá en navegador predeterminado
+
+---
+
+## 📈 MEJORA CONTINUA
+
+### PLAN DE MEJORA SUGERIDO
+
+   SEMANA 1 (Prioridad crítica)
+   □ Resolver TODOS los hallazgos CRÍTICOS (rojo)
+   □ Documentar acciones tomadas
+   □ Ejecutar programa nuevamente
+
+   SEMANA 2-3 (Prioridad alta)
+   □ Resolver hallazgos ALTO (naranja)
+   □ Comunicar cambios al equipo
+   □ Verificar nuevamente
+
+   MES 1-2 (Prioridad media)
+   □ Resolver hallazgos MEDIO (amarillo)
+   □ Implementar políticas
+   □ Capacitar usuarios
+
+   TRIMESTRAL
+   □ Ejecutar verificación mensual
+   □ Comparar tendencias
+   □ Ajustar políticas según necesidad
+
+### MANTENER SEGURIDAD
+
+   DIARIO:
+   • Cambiar contraseñas comprometidas
+   • Revisar logs de seguridad
+
+   SEMANAL:
+   • Ejecutar Windows Update
+   • Revisar Defender
+
+   MENSUALMENTE:
+   • Ejecutar este verificador
+   • Revisar cambios en puntuación
+   • Actualizar políticas
+
+   TRIMESTRALMENTE:
+   • Revisión completa de seguridad
+   • Capacitación de usuario
+   • Auditoría de acceso
+
+---
+
+## 🔐 MEJORES PRÁCTICAS ISO 27001
+
+### CONTRASEÑAS (A.9.2)
+   
+   Requerimientos correctos:
+   ✓ Mínimo 12 caracteres
+   ✓ Mayúsculas + minúsculas + números + símbolos
+   ✓ Cambio cada 90 días máximo
+   ✓ Historial de 24 contraseñas anteriores
+   ✓ Bloqueo tras 5 intentos fallidos
+   ✓ Bloqueo de 30+ minutos
+
+   Comando rápido para configurar:
+   net accounts /minpwlen:12 /maxpwage:90 /uniquepw:24 /lockoutthreshold:5 /lockoutduration:30
+
+### ACCESO (A.9.1)
+   
+   ✓ Deshabilitar cuenta Guest
+   ✓ Renombrar cuenta Administrator
+   ✓ Limitar cuentas administrativas
+   ✓ Habilitar UAC (User Account Control)
+   ✓ Auditar todos los accesos
+
+### CRIPTOGRAFÍA (A.10.2)
+   
+   ✓ BitLocker en particiones críticas
+   ✓ NTFS (no FAT32)
+   ✓ TLS 1.2+ para comunicaciones
+   ✓ Certificados válidos
+   ✓ Claves de recuperación almacenadas
+
+### OPERACIONES (A.12)
+   
+   ✓ Windows Update automático
+   ✓ Defender habilitado con definiciones recientes
+   ✓ Logs de seguridad ≥512 MB
+   ✓ Auditoría de eventos críticos
+   ✓ Retención de logs ≥30 días
+
+### PERÍMETRO (A.13.1)
+   
+   ✓ Firewall en todos los perfiles
+   ✓ Políticas restrictivas (deny by default)
+   ✓ Notificaciones habilitadas
+   ✓ Reglas específicas por aplicación
+   ✓ Revisión regular de reglas
+
+---
+
+## 📞 SOPORTE
+
+   Programa desarrollado basado en:
+   • ISO/IEC 27001:2022
+   • ISO/IEC 27002:2022
+   • ISO/IEC 27035:2016
+   • Best practices de Microsoft
+
+   Repositorio:
+   https://github.com/DinoPattta/veri
+
+   Reporte de problemas:
+   Crea un issue en GitHub con:
+   • Versión Windows
+   • Versión Python
+   • Error específico
+   • Comando ejecutado
+
+---
+
+## ✅ CHECKLIST DE CONFIGURACIÓN SEGURA
+
+   CONTRASEÑAS:
+   □ Longitud ≥12 caracteres
+   □ Complejidad habilitada
+   □ Caducidad ≤90 días
+   □ Historial ≥24
+   □ Bloqueo ≥5 intentos
+   □ Duración ≥30 minutos
+
+   FIREWALL:
+   □ Dominio habilitado
+   □ Privado habilitado
+   □ Público habilitado
+   □ Notificaciones activas
+
+   ANTIMALWARE:
+   □ Defender habilitado
+   □ Tiempo real activo
+   □ Definiciones actualizadas
+   □ Análisis programado
+
+   ACTUALIZACIONES:
+   □ Windows Update automático
+   □ Servicio WuAuServ ejecutándose
+   □ Última actualización ≤30 días
+   □ No hay KB críticos pendientes
+
+   AUDITORÍA:
+   □ Registro de seguridad habilitado
+   □ Auditoría de logon activa
+   □ Logs ≥512 MB
+   □ Retención ≥30 días
+
+   USUARIOS:
+   □ Guest deshabilitada
+   □ Administrator renombrada
+   □ Cuentas de servicio limitadas
+   □ Administrativos limitados
+   □ UAC habilitado
+
+   ENCRIPTACIÓN:
+   □ BitLocker habilitado
+   □ NTFS en particiones
+   □ TLS en comunicaciones
+   □ Certificados válidos
+
+---
+
+## 📄 VERSIÓN
+
+   Programa: Verificador de Seguridad Windows v3.0
+   Última actualización: 30 de noviembre de 2025
+   Controles: 30 detallados
+   Normas: 4 (A.9, A.10, A.12, A.13)
+   Estado: Activo y funcional
+
